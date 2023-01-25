@@ -8,24 +8,24 @@ import Swal from "sweetalert2"
 
 const Form = ({ cambioImg }) => {
 
-    const[todos, setTodos] = useState([])
-    const[todoUser, setTodoUser] = useState("")
-    const[cantidad, setCantidad] = useState(0)
+    const [todos, setTodos] = useState([])
+    const [todoUser, setTodoUser] = useState("")
+    const [cantidad, setCantidad] = useState(0)
 
     const API = axios.create({
-        baseURL: "http://localhost:3000"
+        baseURL: "https://api-todo-amber.vercel.app"
     })
 
-    useEffect(()=>{
+    useEffect(() => {
         API.get("/todos")
-            .then((response) =>{
+            .then((response) => {
                 setTodos(response.data)
             })
-    },[])
+    }, [todos])
 
-    const handleSubmit = async (e) =>{
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        if(todoUser === ""){
+        if (todoUser === "") {
             Swal.fire("Por favor incluye una tarea")
             return;
         }
@@ -37,8 +37,10 @@ const Form = ({ cambioImg }) => {
         console.log(tareas);
         setTodoUser("")
         setCantidad(cantidad + 1)
-        await axios.post("http://localhost:3000/todos", tareas)
+        await axios.post("https://api-todo-amber.vercel.app/todos", tareas)
         setTodos([tareas, ...todos])
+
+        localStorage.setItem("todo", JSON.stringify(todos))
     }
 
 
@@ -59,14 +61,14 @@ const Form = ({ cambioImg }) => {
                 />
             </form>
             <div className="absolute top-60 left-0 right-0 flex flex-col w-1/2 container mx-auto shadow-lg bg-white rounded">
-                {todos.map(todo => <TodoList key={todo.id} todo={todo} cambioImg ={cambioImg} setTodos={setTodos} todos={todos}  cantidad={cantidad} setCantidad={setCantidad} />)}
-            <Filter 
-                cambioImg={cambioImg}
-                 cantidad={cantidad} 
-                 setCantidad={setCantidad} 
-                 setTodos={setTodos} 
-                 todos={todos}
-            />
+                {todos.map(todo => <TodoList key={todo.id} todo={todo} cambioImg={cambioImg} setTodos={setTodos} todos={todos} cantidad={cantidad} setCantidad={setCantidad} />)}
+                <Filter
+                    cambioImg={cambioImg}
+                    cantidad={cantidad}
+                    setCantidad={setCantidad}
+                    setTodos={setTodos}
+                    todos={todos}
+                />
             </div>
         </>
     )

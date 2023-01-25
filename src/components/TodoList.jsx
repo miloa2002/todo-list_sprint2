@@ -10,17 +10,20 @@ const TodoList = ({ cambioImg, todo, setTodos, todos, cantidad, setCantidad }) =
     const handleSubmit = (e) => {
         e.preventDefault();
         setTachado(true)
-        setCantidad(cantidad - 1 )
         todo.completado = true
     }
-    
-    
+
+
     const handleDelete = () => {
         axios
-        .delete(`http://localhost:3000/todos/${todo.id}`)
-        .then(res => {
-            setTodos(todos.filter(i=>i.id !== todo.id))
-        })
+            .delete(`https://api-todo-amber.vercel.app/todos/${todo.id}`)
+            .then(res => {
+                setTodos(todos.filter(i => i.id !== todo.id))
+            })
+        if (cantidad === 0) {
+            return;
+        }
+        setCantidad(cantidad - 1)
     }
 
     return (

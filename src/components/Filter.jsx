@@ -1,18 +1,18 @@
-const Filter = ({cambioImg, cantidad, setTodos, todos}) => {
+const Filter = ({ cambioImg, cantidad, setTodos, todos }) => {
 
 
-  const handleCompletos= () =>{
+  const handleCompletos = () => {
     const completados = todos.filter(todo => todo.completado)
     setTodos(completados)
   }
 
-  const handleActivos = () =>{
+  const handleActivos = () => {
     const activos = todos.filter(todo => !todo.completado)
-      setTodos(activos)
+    setTodos(activos)
 
   }
 
-  const handleTodos = () =>{
+  const handleTodos = () => {
     const todosJuntos = todos.filter(todo => todo.completado && !todo.completado)
     setTodos(todosJuntos)
   }
@@ -29,7 +29,7 @@ const Filter = ({cambioImg, cantidad, setTodos, todos}) => {
         >Todos</button>
 
 
-        <button 
+        <button
           onClick={handleActivos}
           className="hover:text-black">Activo
         </button>
